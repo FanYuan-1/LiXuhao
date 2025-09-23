@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.Perseveres.mapper.EmployeeMapper">
+
+    <!-- 1. 新增员工信息 -->
+    <insert id="insertEmployee" parameterType="com.Perseveres.entity.Employee"
+            useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO employee (name, age, position)
+        VALUES (#{name}, #{age}, #{position})
+    </insert>
+
+    <!-- 2. 根据姓名查询信息 -->
+    <select id="selectEmployeesByName" parameterType="String"
+            resultType="com.Perseveres.entity.Employee">
+        SELECT id, name, age, position
+        FROM employee
+        WHERE name = #{name}
+    </select>
+
+    <!-- 3. 根据姓名更新age、position -->
+    <update id="updateEmployeeByName" parameterType="com.Perseveres.entity.Employee">
+        UPDATE employee
+        SET age = #{age}, position = #{position}
+        WHERE name = #{name}
+    </update>
+
+    <!-- 4. 根据年龄删除信息 -->
+    <delete id="deleteEmployeesByAge" parameterType="Integer">
+        DELETE FROM employee
+        WHERE age = #{age}
+    </delete>
+
+    <!-- 查询所有员工 -->
+    <select id="selectAllEmployees" resultType="com.Perseveres.entity.Employee">
+        SELECT id, name, age, position
+        FROM employee
+    </select>
+</mapper>
