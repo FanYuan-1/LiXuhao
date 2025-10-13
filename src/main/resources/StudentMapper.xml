@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.Perseveres.mapper.StudentMapper">
+
+    <!-- 多条件复杂查询 -->
+    <select id="selectStudentsByConditions" resultType="com.Perseveres.mapper.StudentMapper">
+        SELECT id, student_id, name, major, age, gender
+        FROM student
+        WHERE
+        <choose>
+            <!-- 情况1：姓名不为空时，只根据姓名查询 -->
+            <when test="name != null and name != ''">
+                name LIKE CONCAT('%', #{name}, '%')
+            </when>
+            <!-- 情况2：姓名为空而专业不为空时，只根据专业查询 -->
+            <when test="(name == null or name == '') and (major != null and major != '')">
+                major LIKE CONCAT('%', #{major}, '%')
+            </when>
+            <!-- 情况3：姓名和专业都为空时，查询所有学号不为空的学生 -->
+            <otherwise>
+                student_id IS NOT NULL AND student_id != ''
+            </otherwise>
+        </choose>
+        ORDER BY id
+    </select>
+
+    <!-- 单条件查询：查询id在指定列表中的学生信息 -->
+    <select id="selectStudentsByIds" resultType="com.Perseveres.mapper.StudentMapper">
+        SELECT id, student_id, name, major, age, gender
+        FROM student
+        WHERE id IN
+        <foreach collection="ids" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+        ORDER BY id
+    </select>
+
+    <!-- 插入学生信息 -->
+    <insert id="insertStudent" parameterType="com.Perseveres.mapper.StudentMapper"
+            useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO student (student_id, name, major, age, gender)
+        VALUES (#{studentId}, #{name}, #{major}, #{age}, #{gender})
+    </insert>
+
+    <!-- 查询所有学生 -->
+    <select id="selectAllStudents" resultType="com.Perseveres.mapper.StudentMapper">
+        SELECT id, student_id, name, major, age, gender
+        FROM student
+        ORDER BY id
+    </select>
+</mapper>
