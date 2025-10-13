@@ -11,7 +11,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 
-public class Main {
+public class EmployeeDemo{
     private static SqlSessionFactory sqlSessionFactory;
 
     static {
@@ -25,8 +25,6 @@ public class Main {
     }
 
     public static void main(String[] args) {
-        // 创建员工表（测试用）
-        //createEmployeeTable();
 
         try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             EmployeeMapper mapper = sqlSession.getMapper(EmployeeMapper.class);
@@ -49,7 +47,7 @@ public class Main {
             zhangsanList.forEach(System.out::println);
 
             // 3. 根据姓名更新age、position
-            System.out.println("\n=== 更新李绪昊的信息 ===");
+            System.out.println("\n=== 更新韩一帆的信息 ===");
             Employee updateEmp = new Employee("李绪昊", 22, "高级软件工程师");
             int updateCount = mapper.updateEmployeeByName(updateEmp);
             sqlSession.commit();
