@@ -36,8 +36,8 @@ public class StudentDeno {
             insertTestData(mapper, sqlSession);
 
             // 测试1：多条件查询 - 根据姓名查询
-            System.out.println("\n=== 测试1：根据姓名'李'查询 ===");
-            List<Student> studentsByName = mapper.selectStudentsByConditions("李", null);
+            System.out.println("\n=== 测试1：根据姓名'李绪昊'查询 ===");
+            List<Student> studentsByName = mapper.selectStudentsByConditions("李绪昊", null);
             studentsByName.forEach(System.out::println);
 
             // 测试2：多条件查询 - 根据专业查询

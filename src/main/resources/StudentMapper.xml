@@ -4,7 +4,7 @@
 <mapper namespace="com.Perseveres.mapper.StudentMapper">
 
     <!-- 多条件复杂查询 -->
-    <select id="selectStudentsByConditions" resultType="com.Perseveres.mapper.StudentMapper">
+    <select id="selectStudentsByConditions" resultType="com.Perseveres.entity.Student">
         SELECT id, student_id, name, major, age, gender
         FROM student
         WHERE
@@ -26,7 +26,7 @@
     </select>
 
     <!-- 单条件查询：查询id在指定列表中的学生信息 -->
-    <select id="selectStudentsByIds" resultType="com.Perseveres.mapper.StudentMapper">
+    <select id="selectStudentsByIds" resultType="com.Perseveres.entity.Student">
         SELECT id, student_id, name, major, age, gender
         FROM student
         WHERE id IN
@@ -37,14 +37,14 @@
     </select>
 
     <!-- 插入学生信息 -->
-    <insert id="insertStudent" parameterType="com.Perseveres.mapper.StudentMapper"
+    <insert id="insertStudent" parameterType="com.Perseveres.entity.Student"
             useGeneratedKeys="true" keyProperty="id">
         INSERT INTO student (student_id, name, major, age, gender)
         VALUES (#{studentId}, #{name}, #{major}, #{age}, #{gender})
     </insert>
 
     <!-- 查询所有学生 -->
-    <select id="selectAllStudents" resultType="com.Perseveres.mapper.StudentMapper">
+    <select id="selectAllStudents" resultType="com.Perseveres.entity.Student">
         SELECT id, student_id, name, major, age, gender
         FROM student
         ORDER BY id
